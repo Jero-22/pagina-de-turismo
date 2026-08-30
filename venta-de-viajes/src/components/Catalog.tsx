@@ -7,7 +7,8 @@ import { formatPrice } from "@/lib/format";
 
 type SortKey = "recomendado" | "precio-asc" | "precio-desc" | "duracion";
 
-const MAX_PRICE = Math.max(...trips.map((trip) => trip.price));
+const PRICE_STEP = 50;
+const MAX_PRICE = Math.ceil(Math.max(...trips.map((trip) => trip.price)) / PRICE_STEP) * PRICE_STEP;
 
 export function Catalog() {
   const [query, setQuery] = useState("");
@@ -97,7 +98,7 @@ export function Catalog() {
             type="range"
             min={500}
             max={MAX_PRICE}
-            step={50}
+            step={PRICE_STEP}
             value={maxPrice}
             onChange={(event) => setMaxPrice(Number(event.target.value))}
             data-testid="price-range"
